@@ -6,6 +6,7 @@ import {
   // UIExampleFactory,
 } from "./modules/examples";
 import { HJFYSplitFactory } from "./modules/hjfySplit";
+import { AITranslationFactory } from "./modules/aiTranslation";
 import { SplitViewFactory } from "./modules/splitView";
 import { initLocale } from "./utils/locale";
 import { registerPrefsScripts } from "./modules/preferenceScript";
@@ -47,6 +48,7 @@ async function onStartup() {
   // Mark initialized as true to confirm plugin loading status
   // outside of the plugin (e.g. scaffold testing process)
   addon.data.initialized = true;
+  await AITranslationFactory.writeDiagnostics();
 }
 
 async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
@@ -56,9 +58,11 @@ async function onMainWindowLoad(win: _ZoteroTypes.MainWindow): Promise<void> {
   win.MozXULElement.insertFTLIfNeeded(
     `${addon.data.config.addonRef}-mainWindow.ftl`,
   );
+  AITranslationFactory.registerItemMenu(win);
 }
 
 async function onMainWindowUnload(win: Window): Promise<void> {
+  AITranslationFactory.unregisterMenus(win);
   // Clean up split-view resources when the main window is unloaded.
   // This prevents keeping references to DOM nodes and windows that
   // become "dead objects" after Zotero is closed and reopened.
@@ -71,6 +75,7 @@ async function onMainWindowUnload(win: Window): Promise<void> {
 }
 
 function onShutdown(): void {
+  AITranslationFactory.unregisterMenus();
   SplitViewFactory.unregisterAll();
   HJFYSplitFactory.unregisterAll();
   ztoolkit.unregisterAll();

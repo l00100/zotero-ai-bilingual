@@ -24,14 +24,36 @@ async function startup({ id, version, resourceURI, rootURI }, reason) {
    * and all child variables assigned to it is globally accessible.
    * See `src/index.ts` for details.
    */
-  const ctx = { rootURI };
+  const ctx = { rootURI, Services, IOUtils };
   ctx._globalThis = ctx;
 
-  Services.scriptloader.loadSubScript(
-    `${rootURI}/content/scripts/__addonRef__.js`,
-    ctx,
-  );
-  await Zotero.__addonInstance__.hooks.onStartup();
+  try {
+    Services.scriptloader.loadSubScript(
+      `${rootURI}/content/scripts/__addonRef__.js`,
+      ctx,
+    );
+    await Zotero.__addonInstance__.hooks.onStartup();
+  } catch (error) {
+    const stateDir = Zotero.Prefs.get(
+      "extensions.zotero.hjfySplitReaderCN.aiStatePath",
+      true,
+    );
+    if (stateDir) {
+      try {
+        await IOUtils.writeUTF8(
+          stateDir + (Zotero.isWin ? "\\" : "/") + "plugin-status.json",
+          JSON.stringify({
+            initialized: false,
+            error: String(error),
+            timestamp: new Date().toISOString(),
+          }),
+        );
+      } catch (_) {
+        // Startup diagnostics must not replace the original startup error.
+      }
+    }
+    throw error;
+  }
 }
 
 async function onMainWindowLoad({ window }, reason) {

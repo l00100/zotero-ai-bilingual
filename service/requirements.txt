@@ -1,0 +1,2 @@
+pdf2zh-next==2.10.2
+babeldoc==0.7.1

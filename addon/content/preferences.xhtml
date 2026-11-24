@@ -66,6 +66,91 @@
 </groupbox>
 
 <groupbox>
+  <html:h2 style="margin: 20px 0 8px">AI 论文翻译（保留原版式）</html:h2>
+  <description
+    >对本地 PDF 进行 AI 翻译，不要求 arXiv
+    ID。译文保存为附件，并与原文分屏打开。图表与公式由 PDF2zh-next / BabelDOC
+    尽量保留。</description
+  >
+  <description style="margin: 6px 0"
+    >只有点击“AI 翻译 PDF
+    并分屏打开”才提交任务。本地引擎会把提取的论文文本发送给下面的 AI
+    服务，可能产生 API 费用；不会自动上传整库。</description
+  >
+  <html:label for="hjfy-ai-base-url"
+    >API Base URL（例如 https://你的服务/v1）</html:label
+  >
+  <html:input
+    id="hjfy-ai-base-url"
+    type="url"
+    style="width: 100%; box-sizing: border-box"
+  />
+  <html:label for="hjfy-ai-model" style="margin-top: 6px"
+    >模型名称（填写服务商提供的准确模型 ID）</html:label
+  >
+  <html:input id="hjfy-ai-model" style="width: 100%; box-sizing: border-box" />
+  <html:label for="hjfy-ai-key" style="margin-top: 6px"
+    >API Key（使用 Zotero 的加密凭据存储）</html:label
+  >
+  <html:input
+    id="hjfy-ai-key"
+    type="password"
+    autocomplete="off"
+    style="width: 100%; box-sizing: border-box"
+    placeholder="填写密钥后点击保存"
+  />
+  <hbox style="margin-top: 6px">
+    <button id="hjfy-ai-save-key" label="保存密钥" />
+    <button id="hjfy-ai-clear-key" label="清除已保存密钥" />
+  </hbox>
+  <html:div style="display: flex; gap: 12px; margin-top: 8px">
+    <html:label
+      >原文语言 <html:input id="hjfy-ai-source-lang" style="width: 60px"
+    /></html:label>
+    <html:label
+      >译文语言 <html:input id="hjfy-ai-target-lang" style="width: 60px"
+    /></html:label>
+    <html:label
+      >每秒请求数
+      <html:input
+        id="hjfy-ai-qps"
+        type="number"
+        min="1"
+        max="4"
+        style="width: 60px"
+    /></html:label>
+  </html:div>
+  <html:label for="hjfy-ai-pages" style="margin-top: 8px"
+    >翻译页码（留空为全文；建议先填 1-2 试译）</html:label
+  >
+  <html:input id="hjfy-ai-pages" placeholder="例如 1-2 或 1,3,5" />
+  <checkbox
+    id="hjfy-ai-skip-references"
+    label="跳过参考文献，保留原文（默认开启）"
+  />
+  <description style="opacity: 0.75"
+    >自动识别 References / Bibliography /
+    参考文献；同页正文仍翻译。识别不可靠时会提示，扫描件可能无法识别。</description
+  >
+  <checkbox
+    id="hjfy-ai-tables"
+    label="翻译表格中的文本（实验功能，默认保留表格）"
+  />
+  <button
+    id="hjfy-ai-test-service"
+    label="检查 / 启动本地翻译引擎"
+    style="margin-top: 8px"
+  />
+  <description id="hjfy-ai-status" style="margin-top: 6px"
+    >尚未检查本地服务。此检查不调用付费 AI 接口。</description
+  >
+  <description style="opacity: 0.75; margin-top: 6px"
+    >相同 PDF
+    和相同翻译设置会复用已有译文。取消任务可使用条目右键菜单；已发出的模型请求可能仍产生少量费用。复杂排版和扫描件效果取决于引擎。</description
+  >
+</groupbox>
+
+<groupbox>
   <!-- Appearance Settings -->
   <label>
     <html:h2

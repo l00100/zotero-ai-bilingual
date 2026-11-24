@@ -15,6 +15,19 @@ declare namespace _ZoteroTypes {
       "hjfyCookie": string;
       "autoFetchOnNewItems": boolean;
       "autoTranslateAttemptedKeys": string;
+      "aiBaseURL": string;
+      "aiModel": string;
+      "aiSourceLang": string;
+      "aiTargetLang": string;
+      "aiPages": string;
+      "aiQPS": number;
+      "aiTranslateTables": boolean;
+      "aiSkipReferences": boolean;
+      "aiBridgeToken": string;
+      "aiPythonPath": string;
+      "aiServicePath": string;
+      "aiStatePath": string;
+      "aiPendingJobs": string;
     };
   }
 }

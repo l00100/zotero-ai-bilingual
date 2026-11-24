@@ -1,10 +1,10 @@
 {
-  "name": "zotero-hjfy-split-reader-cn",
+  "name": "zotero-hjfy-ai-split-reader",
   "type": "module",
-  "version": "0.1.4",
-  "description": "Fetch HJFY translations for papers and open them in a split-view reader",
+  "version": "0.1.5-ai.3",
+  "description": "HJFY and OpenAI-compatible AI PDF translation with preserved layout and split-view reading (local fork)",
   "config": {
-    "addonName": "HJFY Split Reader CN",
+    "addonName": "HJFY + AI Split Reader CN",
     "addonID": "zotero-hjfy-split-reader-cn@leisongju.github.io",
     "addonRef": "zotero-hjfy-split-reader-cn",
     "addonInstance": "ZoteroHJFYSplitReaderCN",
@@ -12,13 +12,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leisongju/zotero-hjfy-split-reader-cn.git"
+    "url": "git+https://github.com/l00100/zotero-hjfy-ai-split-reader.git"
   },
   "author": "4b and contributors",
   "bugs": {
-    "url": "https://github.com/leisongju/zotero-hjfy-split-reader-cn/issues"
+    "url": "https://github.com/l00100/zotero-hjfy-ai-split-reader/issues"
   },
-  "homepage": "https://github.com/leisongju/zotero-hjfy-split-reader-cn#readme",
+  "homepage": "https://github.com/l00100/zotero-hjfy-ai-split-reader#readme",
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "zotero-plugin serve",
@@ -28,7 +28,10 @@
     "release:check": "npm run lint:check && npm run build",
     "release": "zotero-plugin release",
     "test": "zotero-plugin test",
-    "update-deps": "npm update --save"
+    "update-deps": "npm update --save",
+    "test:unit": "node --test test/ai-core.node.mjs",
+    "test:service": "python -m unittest discover -s tests -v",
+    "package:release": "python scripts/package_release.py"
   },
   "dependencies": {
     "zotero-plugin-toolkit": "^5.1.2"
@@ -60,5 +63,11 @@
         }
       }
     ]
-  }
+  },
+  "contributors": [
+    {
+      "name": "l00100 (AI translation enhancements)",
+      "url": "https://github.com/l00100"
+    }
+  ]
 }

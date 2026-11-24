@@ -19,3 +19,26 @@ logs
 AGENTS.md
 backlog/
 .backlog/
+
+# AI service private/runtime data
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.test-runtime/
+.cache/
+data/
+engine-home/
+backups/
+dist/
+*.pdf
+*.sqlite*
+*.db*
+bridge-token.txt
+logins.json
+prefs.js
+!addon/prefs.js
+.env.*
+!.env.example
