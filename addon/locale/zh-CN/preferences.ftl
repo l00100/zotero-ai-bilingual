@@ -1,4 +1,4 @@
-pref-title = HJFY Split Reader
+pref-title = Zotero 中英文对照阅读与 AI 翻译
 pref-section-basic = 基础设置
 pref-follow-focus =
     .label = 跟随鼠标聚焦切换主窗口
@@ -16,4 +16,4 @@ pref-section-appearance = 外观设置
 pref-scrollbar-color = 主窗口滚动条颜色 (RGB)：
 pref-scrollbar-color-desc = 设置主窗口 PDF 阅读器滚动条的高亮颜色，用于区分主窗口和副窗口。
 pref-section-about = 关于
-pref-about-desc = HJFY Split Reader 用于获取 arXiv 论文的幻觉翻译，并将原文 PDF 与译文 PDF 进行分屏对照阅读。
+pref-about-desc = 在 Zotero 中调用 AI 翻译论文 PDF，或获取已有 HJFY 译文，并将原文与译文分屏对照阅读。

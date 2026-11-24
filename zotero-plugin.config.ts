@@ -7,7 +7,8 @@ export default defineConfig({
   name: pkg.config.addonName,
   id: pkg.config.addonID,
   namespace: pkg.config.addonRef,
-  updateURL: `https://raw.githubusercontent.com/l00100/zotero-hjfy-ai-split-reader/ai-enhancements/${
+  xpiName: "zotero-ai-bilingual",
+  updateURL: `https://raw.githubusercontent.com/l00100/zotero-ai-bilingual/ai-enhancements/${
     pkg.version.includes("-") ? "update-beta.json" : "update.json"
   }`,
   xpiDownloadLink:

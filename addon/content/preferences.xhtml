@@ -217,12 +217,21 @@
   </label>
   <description data-l10n-id="pref-about-desc" style="margin: 0 0 8px 0" />
   <html:a
+    href="https://github.com/l00100/zotero-ai-bilingual"
+    style="text-decoration: none; cursor: pointer; margin-right: 16px"
+    onclick="
+      Zotero.launchURL(this.href);
+      event.preventDefault();
+    "
+    >GitHub</html:a
+  >
+  <html:a
     href="https://github.com/leisongju/zotero-hjfy-split-reader-cn"
     style="text-decoration: none; cursor: pointer"
     onclick="
       Zotero.launchURL(this.href);
       event.preventDefault();
     "
-    >⭐ Star it on GitHub</html:a
+    >Upstream / 原版</html:a
   >
 </groupbox>

@@ -1,10 +1,10 @@
 {
-  "name": "zotero-hjfy-ai-split-reader",
+  "name": "zotero-ai-bilingual",
   "type": "module",
-  "version": "0.1.5-ai.3",
-  "description": "HJFY and OpenAI-compatible AI PDF translation with preserved layout and split-view reading (local fork)",
+  "version": "0.1.5-ai.4",
+  "description": "Zotero 论文 AI 翻译与中英文对照阅读：尽量保留 PDF 版式，译文与原文左右分屏，支持通用 OpenAI 兼容接口。",
   "config": {
-    "addonName": "HJFY + AI Split Reader CN",
+    "addonName": "Zotero 中英文对照阅读与 AI 翻译",
     "addonID": "zotero-hjfy-split-reader-cn@leisongju.github.io",
     "addonRef": "zotero-hjfy-split-reader-cn",
     "addonInstance": "ZoteroHJFYSplitReaderCN",
@@ -12,13 +12,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/l00100/zotero-hjfy-ai-split-reader.git"
+    "url": "git+https://github.com/l00100/zotero-ai-bilingual.git"
   },
   "author": "4b and contributors",
   "bugs": {
-    "url": "https://github.com/l00100/zotero-hjfy-ai-split-reader/issues"
+    "url": "https://github.com/l00100/zotero-ai-bilingual/issues"
   },
-  "homepage": "https://github.com/l00100/zotero-hjfy-ai-split-reader#readme",
+  "homepage": "https://github.com/l00100/zotero-ai-bilingual#readme",
   "license": "AGPL-3.0-or-later",
   "scripts": {
     "start": "zotero-plugin serve",

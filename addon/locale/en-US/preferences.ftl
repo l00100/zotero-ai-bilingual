@@ -1,4 +1,4 @@
-pref-title = HJFY Split Reader
+pref-title = Zotero AI Bilingual Reader
 pref-section-basic = Basic Settings
 pref-follow-focus =
     .label = Follow mouse focus to switch primary window
@@ -16,4 +16,4 @@ pref-section-appearance = Appearance
 pref-scrollbar-color = Primary scrollbar color (RGB):
 pref-scrollbar-color-desc = Highlight color for the primary window scrollbar, used to distinguish it from the secondary window.
 pref-section-about = About
-pref-about-desc = HJFY Split Reader fetches HJFY translations for arXiv papers and opens the source PDF and translation side by side.
+pref-about-desc = Translate paper PDFs with an OpenAI-compatible API or fetch HJFY translations, then read source and translation side by side.

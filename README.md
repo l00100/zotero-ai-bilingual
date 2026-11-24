@@ -1,12 +1,18 @@
-# HJFY + AI Split Reader CN
+# Zotero 中英文对照阅读与 AI 翻译
 
-在 Zotero 中获取或生成论文译文 PDF，保存为原论文条目下的附件，并与原文分屏阅读。
+在 Zotero 中把英文论文翻译成中文，左边看原文、右边看译文。尽量保留图表、公式和 PDF 版式，译文自动保存在原论文条目下。
+
+[下载安装包](https://github.com/l00100/zotero-ai-bilingual/releases) · [安装说明](docs/INSTALL.md) · [来源与致谢](NOTICE.md)
+
+![中英文对照阅读效果：左侧英文原文，右侧 AI 中文译文](docs/images/ai-bilingual-preview.png)
+
+_上图为实际生成的 PDF 页面局部，按原文与译文左右对照展示（由 PDF 直接渲染）。点击图片可查看大图。_
 
 **这是一个衍生改进项目。** 本项目基于 [leisongju/zotero-hjfy-split-reader-cn v0.1.4](https://github.com/leisongju/zotero-hjfy-split-reader-cn/tree/v0.1.4)，该项目又基于 [Infinity4B/zotero-hjfy-split-reader](https://github.com/Infinity4B/zotero-hjfy-split-reader)。分屏阅读器和 HJFY 功能主要继承自上游；我们在此基础上增加通用 AI PDF 翻译、本地排版服务与相关使用改进。完整来源和各项目的贡献见 [NOTICE.md](NOTICE.md)，上游说明保存在 [docs/UPSTREAM-README-v0.1.4.md](docs/UPSTREAM-README-v0.1.4.md)。
 
 [![License: AGPL-3.0-or-later](https://img.shields.io/badge/License-AGPL--3.0--or--later-blue)](LICENSE)
 
-## 本次改进
+## 可以做什么
 
 - 接入 OpenAI 兼容的 Chat Completions 接口，配置 Base URL、模型名和 API Key。
 - 使用本地 PDF2zh-next / BabelDOC 排版服务处理已有 PDF，无需 arXiv ID。
@@ -20,7 +26,7 @@
 
 ## 安装
 
-从本仓库 [Releases](https://github.com/l00100/zotero-hjfy-ai-split-reader/releases) 下载对应安装包，完整解压。包中包括 XPI、服务源码、安装脚本和许可证。
+从本仓库 [Releases](https://github.com/l00100/zotero-ai-bilingual/releases) 下载对应安装包，完整解压。包中包括 XPI、服务源码、安装脚本和许可证。
 
 1. 在 Zotero 中打开 **工具 → 插件 → 齿轮 → 从文件安装插件**，选择 XPI。
 2. 完全退出 Zotero。
@@ -30,7 +36,7 @@
 
 macOS 可运行 `install/安装Mac服务.command`，或在终端执行 `bash` 加脚本路径。Windows 可在 PowerShell 中运行 `install/安装Windows服务.ps1`；也可使用 Python 直接运行 `install/windows_setup.py`。详细目录、恢复和启动方式见 [安装文档](docs/INSTALL.md)。
 
-本分支沿用上游插件 ID，因此会替换同 ID 的上游插件，不能与其同时启用。安装脚本只为这个改进版关闭自动更新，以免原版更新覆盖改动。请保留现有 Zotero 配置备份。
+本分支沿用上游插件 ID，因此会替换同 ID 的上游插件，不能与其同时启用。显示名称已简化；现有内部 ID、配置键和服务目录继续沿用，以便保留已保存的设置和译文缓存。安装脚本只为这个改进版关闭自动更新，以免原版更新覆盖改动。请保留现有 Zotero 配置备份。
 
 ### 使用与保存
 

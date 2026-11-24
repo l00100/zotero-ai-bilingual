@@ -15,9 +15,10 @@ with zipfile.ZipFile(xpies[0]) as archive:
         raise RuntimeError("XPI and package versions differ")
 
 for platform in ("macOS", "Windows"):
-    name = f"HJFY-AI-Reader-{platform}-{VERSION}"
+    name = f"Zotero-AI-Bilingual-{platform}-{VERSION}"
     files = [(xpies[0], xpies[0].name), (ROOT / "LICENSE", "LICENSE"),
              (ROOT / "NOTICE.md", "NOTICE.md"), (ROOT / "README.md", "README.md"),
+             (ROOT / "docs/images/ai-bilingual-preview.png", "docs/images/ai-bilingual-preview.png"),
              (ROOT / "docs/INSTALL.md", "docs/INSTALL.md")]
     for file in (ROOT / "service").glob("*"):
         if file.is_file() and file.suffix in (".py", ".txt"):
