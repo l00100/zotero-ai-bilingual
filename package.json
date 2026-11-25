@@ -1,7 +1,7 @@
 {
   "name": "zotero-ai-bilingual",
   "type": "module",
-  "version": "0.1.5-ai.4",
+  "version": "0.1.5-ai.5",
   "description": "Zotero 论文 AI 翻译与中英文对照阅读：尽量保留 PDF 版式，译文与原文左右分屏，支持通用 OpenAI 兼容接口。",
   "config": {
     "addonName": "Zotero 中英文对照阅读与 AI 翻译",
@@ -29,7 +29,7 @@
     "release": "zotero-plugin release",
     "test": "zotero-plugin test",
     "update-deps": "npm update --save",
-    "test:unit": "node --test test/ai-core.node.mjs",
+    "test:unit": "node --test test/*.node.mjs",
     "test:service": "python -m unittest discover -s tests -v",
     "package:release": "python scripts/package_release.py"
   },

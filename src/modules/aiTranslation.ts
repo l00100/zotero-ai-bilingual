@@ -29,6 +29,11 @@ export class AITranslationFactory {
     if (!menu) return;
     for (const [id, label, action] of [
       [
+        "ai-open-existing",
+        "打开已有译文并分屏阅读（不翻译）",
+        () => this.handleOpenExisting(win),
+      ],
+      [
         "ai-translate",
         "AI 翻译 PDF 并分屏打开…",
         () => this.handleCommand(win),
@@ -59,6 +64,7 @@ export class AITranslationFactory {
   static unregisterMenus(win?: Window) {
     const windows = win ? [win] : Zotero.getMainWindows();
     for (const w of windows) {
+      w.document.getElementById("ai-open-existing")?.remove();
       w.document.getElementById("ai-translate")?.remove();
       w.document.getElementById("ai-cancel")?.remove();
     }
@@ -301,6 +307,114 @@ export class AITranslationFactory {
     return null;
   }
 
+  /** Find saved translations by source identity, independently of AI settings. */
+  private static async localTranslations(source: Zotero.Item) {
+    const search = new Zotero.Search();
+    search.addCondition("libraryID", "is", String(source.libraryID));
+    search.addCondition("tag", "is", `ai-reader-source:${source.key}`);
+    const ids = new Set(await search.search());
+    if (source.parentItemID) {
+      const parent = Zotero.Items.get(source.parentItemID);
+      for (const id of parent?.getAttachments() || []) ids.add(id);
+    }
+    const translations: Zotero.Item[] = [];
+    for (const id of ids) {
+      const item = Zotero.Items.get(id);
+      if (
+        !item ||
+        item.deleted ||
+        item.id === source.id ||
+        item.libraryID !== source.libraryID ||
+        !item.isFileAttachment() ||
+        item.attachmentContentType !== "application/pdf" ||
+        !this.isTranslation(item)
+      )
+        continue;
+      const sourceTags = item
+        .getTags()
+        .filter((tag) => tag.tag.startsWith("ai-reader-source:"));
+      // Never pick a translation belonging to a different original PDF.
+      if (
+        sourceTags.length &&
+        !this.hasTag(item, `ai-reader-source:${source.key}`)
+      )
+        continue;
+      const path = await item.getFilePathAsync();
+      if (path && (await IOUtils.exists(path))) translations.push(item);
+    }
+    return translations;
+  }
+
+  /** Read-only entry point: never reads API settings or starts a translation. */
+  static async handleOpenExisting(win: _ZoteroTypes.MainWindow) {
+    const promptParent = win as unknown as mozIDOMWindowProxy;
+    try {
+      const selected = win.ZoteroPane.getSelectedItems();
+      if (selected.length !== 1)
+        throw new Error("请先选择一篇论文、原文 PDF 或已有译文 PDF");
+      const source = await this.resolveSource(selected[0]);
+      const path = await source.getFilePathAsync();
+      if (!path || !(await IOUtils.exists(path)))
+        throw new Error("原文 PDF 尚未下载到本机，请先下载原文附件");
+      const candidates = await this.localTranslations(source);
+      if (!candidates.length)
+        throw new Error(
+          "没有找到已保存到本机的译文 PDF。请先下载已有译文附件，或使用“AI 翻译 PDF 并分屏打开…”生成译文。此按钮不会发起翻译。",
+        );
+      // Selecting a translation explicitly takes precedence over other versions.
+      let translation = candidates.find((item) => item.id === selected[0].id);
+      if (!translation && candidates.length === 1) translation = candidates[0];
+      if (!translation) {
+        const choice = { value: 0 };
+        const labels = candidates.map(
+          (item) =>
+            `${item.getField("title") || item.attachmentFilename}${item.dateAdded ? ` · ${item.dateAdded}` : ""}`,
+        );
+        let accepted: boolean;
+        try {
+          accepted = Services.prompt.select(
+            promptParent,
+            "选择已有译文",
+            "找到多个译文版本，请选择要打开的文件（不会重新翻译）",
+            labels,
+            choice,
+          );
+        } catch (error) {
+          // Earlier Gecko versions include a separate list-length argument.
+          if (
+            !/NS_ERROR_XPC_(?:NOT_ENOUGH_ARGS|BAD_CONVERT_JS|NEED_OUT_OBJECT)/.test(
+              String(error),
+            )
+          )
+            throw error;
+          accepted = (
+            Services.prompt.select as unknown as (...args: unknown[]) => boolean
+          )(
+            win,
+            "选择已有译文",
+            "找到多个译文版本，请选择要打开的文件（不会重新翻译）",
+            labels.length,
+            labels,
+            choice,
+          );
+        }
+        if (!accepted) return;
+        translation = candidates[choice.value];
+        if (!translation) return;
+      }
+      await SplitViewFactory.openItemsInSplitView(source, translation, {
+        primarySide: "right",
+        activeSide: "right",
+      });
+    } catch (error) {
+      Services.prompt.alert(
+        promptParent,
+        "打开已有译文",
+        error instanceof Error ? error.message : "无法打开已有译文",
+      );
+    }
+  }
+
   private static async translate(source: Zotero.Item, report: Report) {
     const config = this.config();
     const path = await source.getFilePathAsync();
@@ -506,6 +620,9 @@ export class AITranslationFactory {
         credentialStoreAvailable,
         aiMenuRegistered: windows.some(
           (w) => !!w.document.getElementById("ai-translate"),
+        ),
+        openExistingMenuRegistered: windows.some(
+          (w) => !!w.document.getElementById("ai-open-existing"),
         ),
         timestamp: new Date().toISOString(),
       };

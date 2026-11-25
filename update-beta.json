@@ -3,9 +3,9 @@
     "zotero-hjfy-split-reader-cn@leisongju.github.io": {
       "updates": [
         {
-          "version": "0.1.5-ai.4",
-          "update_link": "https://github.com/l00100/zotero-ai-bilingual/releases/download/v0.1.5-ai.4/zotero-ai-bilingual.xpi",
-          "update_hash": "sha512:5dcc4292e1fb3ebab018e40595ab71884e98dff67cafa6331a9ed260734a50000217d8cf5db7501954376404c64ea418739c24d1795b0772db8844b254fb1672",
+          "version": "0.1.5-ai.5",
+          "update_link": "https://github.com/l00100/zotero-ai-bilingual/releases/download/v0.1.5-ai.5/zotero-ai-bilingual.xpi",
+          "update_hash": "sha512:5bfa780cf067a4f47389803671e02f15af9d2a4b31da66f9b9b14a48646608d24436f77bffd1ec1560d979d4c55f5a784136c1b270d01d298c7c8d6d50aa755e",
           "applications": {
             "zotero": {
               "strict_min_version": "6.999",
